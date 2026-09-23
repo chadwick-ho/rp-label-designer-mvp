@@ -1,0 +1,185 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="RP Labels online vial label designer prototype.">
+  <title>RP Online Label Designer - MVP</title>
+  <link rel="preconnect" href="https://cdnjs.cloudflare.com">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <header class="site-header">
+    <a class="brand" href="#" aria-label="RP Labels home">
+      <span class="brand-mark">RP</span>
+      <span>RP Labels</span>
+    </a>
+    <div class="prototype-flag">Interactive MVP</div>
+    <button class="header-action" id="resetBtn" type="button">Reset design</button>
+  </header>
+
+  <main>
+    <section class="intro">
+      <div>
+        <p class="eyebrow">ONLINE LABEL DESIGNER</p>
+        <h1>Design your custom vial label online for free.</h1>
+        <p>No account and no payment. Enter your product details, choose a finish, download a preview and request a free professional proof.</p>
+      </div>
+      <div class="status-strip" aria-label="Designer benefits">
+        <span>Live preview</span>
+        <span>Original templates</span>
+        <span>Free proof review</span>
+      </div>
+    </section>
+
+    <div class="designer-layout">
+      <div class="work-area">
+        <section class="preview-stage" aria-label="Live label preview">
+          <div class="preview-heading">
+            <div>
+              <p class="section-kicker">LIVE PREVIEW</p>
+              <h2>Your label, shown two ways</h2>
+            </div>
+            <span class="save-state" id="saveState">Draft saved locally</span>
+          </div>
+
+          <div class="preview-grid">
+            <article class="preview-pane flat-pane">
+              <div class="pane-label">Flat label</div>
+              <div class="flat-label-wrap" id="flatLabel" aria-label="Flat label preview"></div>
+              <p id="sizeCaption">44 x 19 mm · rounded corners · 3 mL vial</p>
+            </article>
+
+            <article class="preview-pane bottle-pane">
+              <div class="pane-label">On vial</div>
+              <div class="vial-scene" aria-label="Vial mockup preview">
+                <div class="photo-vial" id="photoVial">
+                  <img id="vialPhoto" src="assets/vial-photo-3ml.png" alt="Photorealistic 3 mL clear glass vial product mockup">
+                  <div class="bottle-label" id="bottleLabel"></div>
+                </div>
+              </div>
+            </article>
+          </div>
+        </section>
+
+        <section class="editor-section" data-step="1">
+          <div class="section-heading">
+            <span class="step-number">1</span>
+            <div><h2>Choose label size</h2><p>Match the label to the vial before entering artwork.</p></div>
+          </div>
+          <div class="segmented" id="sizeOptions">
+            <button class="segment active" type="button" data-size="3ml"><strong>3 mL vial</strong><span>44 x 19 mm</span></button>
+            <button class="segment" type="button" data-size="10ml"><strong>10 mL vial</strong><span>70 x 25 mm</span></button>
+          </div>
+        </section>
+
+        <section class="editor-section" data-step="2">
+          <div class="section-heading">
+            <span class="step-number">2</span>
+            <div><h2>Add label information</h2><p>Keep critical text short and readable on small-format labels.</p></div>
+          </div>
+          <div class="field-grid">
+            <label class="field wide"><span>Product / compound</span><input id="productName" maxlength="24" value="PEPTIDE 10" placeholder="e.g. PEPTIDE 10"></label>
+            <label class="field"><span>Strength</span><input id="dose" maxlength="8" inputmode="decimal" value="10" placeholder="10"></label>
+            <label class="field"><span>Unit</span><select id="unit"><option>mg</option><option>mcg</option><option>mL</option><option>IU</option></select></label>
+            <label class="field"><span>Batch / custom text</span><input id="batch" maxlength="18" value="BATCH RP0926" placeholder="BATCH RP0926"></label>
+            <label class="field"><span>Expiry / date</span><input id="expiry" maxlength="14" value="EXP 09/2028" placeholder="EXP 09/2028"></label>
+            <label class="field wide"><span>QR destination</span><input id="qrValue" type="url" value="https://rplabels.com" placeholder="https://yourwebsite.com/verify"></label>
+          </div>
+        </section>
+
+        <section class="editor-section" data-step="3">
+          <div class="section-heading">
+            <span class="step-number">3</span>
+            <div><h2>Choose a design</h2><p>Original RP templates built for small-vial legibility.</p></div>
+          </div>
+          <div class="template-grid" id="templateGrid"></div>
+        </section>
+
+        <section class="editor-section" data-step="4">
+          <div class="section-heading">
+            <span class="step-number">4</span>
+            <div><h2>Add your logo</h2><p>PNG, JPG or WEBP. Transparent PNG gives the cleanest result.</p></div>
+          </div>
+          <div class="upload-row">
+            <input type="file" id="logoFile" accept="image/png,image/jpeg,image/webp" hidden>
+            <button class="secondary-button" id="logoPick" type="button">Upload logo</button>
+            <span id="logoName">No logo uploaded</span>
+            <button class="text-button" id="logoRemove" type="button" hidden>Remove</button>
+          </div>
+          <div class="logo-controls" id="logoControls" hidden>
+            <label><span>Size</span><input id="logoScale" type="range" min="35" max="150" value="80"></label>
+            <label><span>Horizontal</span><input id="logoX" type="range" min="-30" max="30" value="0"></label>
+            <label><span>Vertical</span><input id="logoY" type="range" min="-20" max="20" value="0"></label>
+          </div>
+        </section>
+
+        <section class="editor-section" data-step="5">
+          <div class="section-heading">
+            <span class="step-number">5</span>
+            <div><h2>Select material</h2><p>The screen preview simulates finish and moving light, not exact press color.</p></div>
+          </div>
+          <div class="material-grid" id="materialOptions">
+            <button class="material active" type="button" data-material="white"><span class="material-swatch white"></span><strong>White BOPP</strong><small>Clean, sharp color</small></button>
+            <button class="material" type="button" data-material="silver"><span class="material-swatch silver"></span><strong>Silver Holographic</strong><small>Soft rainbow sheen</small></button>
+            <button class="material" type="button" data-material="prism"><span class="material-swatch prism"></span><strong>Prism Holographic</strong><small>High-impact facets</small></button>
+          </div>
+        </section>
+
+        <section class="editor-section" data-step="6">
+          <div class="section-heading">
+            <span class="step-number">6</span>
+            <div><h2>Choose quantity</h2><p>This helps our team prepare an accurate production quote after your free proof.</p></div>
+          </div>
+          <div class="quantity-grid" id="quantityOptions">
+            <button type="button" class="quantity active" data-qty="100"><strong>100</strong><span>labels</span></button>
+            <button type="button" class="quantity" data-qty="250"><strong>250</strong><span>labels</span></button>
+            <button type="button" class="quantity" data-qty="500"><strong>500</strong><span>labels</span></button>
+            <button type="button" class="quantity" data-qty="1000"><strong>1,000</strong><span>labels</span></button>
+          </div>
+        </section>
+      </div>
+
+      <aside class="order-summary" aria-label="Order summary">
+        <p class="section-kicker">DESIGN SUMMARY</p>
+        <div class="summary-mini" id="summaryMini"></div>
+        <dl>
+          <div><dt>Size</dt><dd id="summarySize">3 mL · 44 x 19 mm</dd></div>
+          <div><dt>Template</dt><dd id="summaryTemplate">Clinical Blue</dd></div>
+          <div><dt>Material</dt><dd id="summaryMaterial">White BOPP</dd></div>
+          <div><dt>Quantity</dt><dd id="summaryQty">100 labels</dd></div>
+        </dl>
+        <div class="estimate"><span>Online designer</span><strong id="summaryPrice">FREE</strong><small id="unitPrice">No design fee</small></div>
+        <ul class="proof-list">
+          <li>Free online label design</li>
+          <li>Free digital proof before production</li>
+          <li>No account or payment required</li>
+        </ul>
+        <button class="primary-button" id="reviewBtn" type="button">Review &amp; request free proof</button>
+        <button class="secondary-button full" id="downloadBtn" type="button">Download preview</button>
+      </aside>
+    </div>
+  </main>
+
+  <div class="modal" id="reviewModal" hidden>
+    <div class="modal-backdrop" data-close-modal></div>
+    <section class="modal-dialog" role="dialog" aria-modal="true" aria-labelledby="reviewTitle">
+      <button class="modal-close" type="button" data-close-modal aria-label="Close">×</button>
+      <p class="section-kicker">FINAL CHECK</p>
+      <h2 id="reviewTitle">Review your label concept</h2>
+      <div class="review-preview" id="reviewPreview"></div>
+      <div class="review-meta" id="reviewMeta"></div>
+      <label class="approval"><input type="checkbox" id="approvalCheck"><span>I confirm the spelling and that I have permission to use the uploaded artwork.</span></label>
+      <div class="modal-actions">
+        <button class="secondary-button" type="button" data-close-modal>Continue editing</button>
+        <button class="primary-button" id="whatsappBtn" type="button" disabled>Send for free proof</button>
+      </div>
+    </section>
+  </div>
+
+  <div class="toast" id="toast" role="status" aria-live="polite"></div>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
+  <script src="app.js"></script>
+</body>
+</html>
